@@ -1,6 +1,6 @@
-#Instructions  
+# Instructions  
 
-##Firebird  
+## Firebird  
 
 -1 Edit -> mcedit /etc/apt/sources.list  
     Add -> deb http://ftp.de.debian.org/debian jessie main  
@@ -24,7 +24,7 @@
 -7 Run Sv --> svf firebird | postgresql | mysql
 
 
-##PostgreSQL  
+## PostgreSQL  
 
 -1 apt-get install posgresql  
 -2 apt-get install libpq-dev  
@@ -33,14 +33,14 @@
 
 Manage postgresql from console https://www.a2hosting.com/kb/developer-corner/postgresql/managing-postgresql-databases-and-users-from-the-command-line  
 
-##MySQL  
+## MySQL  
 
 -1 apt-get install mysql-server  
 -2 apt-get install libmysqlclient-dev  
 -3 gcc mysql.c -Wall -g -c -L/usr/lib/mysql -lmysqlclient  
 -4 -4 gcc -Wall -o svf  svSgbd.c ini/ini.o postgresql/postgresql.o -lpq firebird/firebird.o -lfb mysql/mysql.o -lmysqlclient  
 
-##Switch Server  
+## Switch Server  
 
 -1 gcc -Wall -g -c ini/ini.c  
 -2 gcc -Wall -o svSwitch ini/ini.o svSwitch.c  
