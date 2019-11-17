@@ -30,7 +30,7 @@ int setConfigBd(){
     if (!ini_table_read_from_file(config, "config/config.ini")) {
         puts("El Archivo de Config no Existe!");
       return 0;
-    }else {
+    }else {//Cargo las config para los diferentes sgdb
         strcpy(userBD,ini_table_get_entry(config, sgbd, "user"));
         strcpy(passUserBD,ini_table_get_entry(config, sgbd, "pass"));
 

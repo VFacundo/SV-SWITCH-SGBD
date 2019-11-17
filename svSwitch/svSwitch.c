@@ -140,7 +140,7 @@ int main(int argc, char const *argv[]) {
                 }else{
                   printf("Opcion Incorrecta!\n");
                 }
-
+                //Si se creo el socket, envio la consulta y espero una respuesta.
                 if(sockCli!=-1){
                     write(sockCli,querySend,sizeof(querySend));
                     printf("Esperando leer\n" );
