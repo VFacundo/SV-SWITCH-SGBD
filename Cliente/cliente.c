@@ -42,7 +42,7 @@ int iniciarSocketCliente(char ip[],int port){
     printf("Socket Creation Failed..\n");
     exit(0);
   }else{
-    printf("Socket Cliente Creado..\n");
+    //Socket Creado..
     bzero(&servaddr, sizeof(servaddr));
     //IP-Puerto
     servaddr.sin_family = AF_INET;
@@ -53,7 +53,7 @@ int iniciarSocketCliente(char ip[],int port){
       printf("Connection Failed..\n");
       exit(0);
     }else{
-      printf("Connected..\n");
+      printf("Connected.. ");
     }
   }
   return sockfd;
@@ -61,15 +61,36 @@ int iniciarSocketCliente(char ip[],int port){
 
 int main(int argc, char const *argv[]) {
   printf("---Cliente SV-SWITCH Iniciado!---\n");
-  printf("Formato de las Consultas: 'Sgbd'/'dbName'/'querySQL'\n");
-  printf("Ingrese Una Consulta:\n");
-  printf(">");
-  char query[1024];
-  //scanf("%s", query);
-  fgets (query, 100, stdin);
-  printf("Tu Consulta es: %s\n",query );
 
-  direccionSv* confSv =cargarDireccionSv();
-  printf("La direccion del Sv es %s : %s\n",confSv->ip,confSv->port);
+  while(true){//Bucle Principal
+    printf("Formato de las Consultas: 'Sgbd'/'dbName'/'querySQL'\n");
+    printf("Ingrese Una Consulta || Ingrese '//' para Salir:\n");
+    printf(">");
+    char query[1024];
+    char respuesta[1024];
+    fgets (query, 100, stdin);
+
+    char *p;
+    p = strchr(query,'\n');//Busco el salto de linea
+    if(p) *p = '\0';//Reemplazo el salto de linea
+    if(strcmp(query,"//")==0) exit(0);//salgo del bucle..
+
+    direccionSv* confSv =cargarDireccionSv();
+    int sockId = iniciarSocketCliente(confSv->ip,atoi(confSv->port));//Intento conectar con el sv
+    if(sockId != -1){
+      printf("Conectado con el Server, enviando Consulta...\n");
+      write(sockId,query,sizeof(query));
+      printf("Respuesta a tu Consulta: \n");
+      printf(">");
+      read(sockId,respuesta,1024);
+      printf("%s\n \n",respuesta);
+      close(sockId);
+      strcpy(respuesta,"");
+      strcpy(query,"");
+    }else{
+      printf("No fue posible conectar con el Server...\n");
+    }
+  }
+
   return 0;
 }

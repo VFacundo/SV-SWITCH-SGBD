@@ -47,17 +47,18 @@ void obtenerQuery(char query[],char sgbd[],char querySend[]){
     querySend[k] = query[j];
     k++;
   }
-  querySend[k-1] = '\0';
+  querySend[k] = '\0';
 }
 
 /*Inicia un Socket como Cliente contra el Sgbd*/
-int iniciarSocketCliente(char ip[],int port){
+int iniciarSocketCliente(char ip[],int port, int idsockc){
   int sockfd;
   struct sockaddr_in servaddr, cli;
 
   sockfd = socket(AF_INET, SOCK_STREAM,0);
   if(sockfd == -1){
     printf("Socket Creation Failed..\n");
+    write(idsockc,"No se pudo Conectar con el SGBD",1024);
     exit(0);
   }else{
     printf("Socket Cliente Creado..\n");
@@ -69,6 +70,7 @@ int iniciarSocketCliente(char ip[],int port){
 
     if(connect(sockfd, (SA*)&servaddr,sizeof(servaddr))!=0){
       printf("Connection Failed..\n");
+      write(idsockc,"No se pudo Conectar con el SGBD",1024);
       exit(0);
     }else{
       printf("Connected..\n");
@@ -128,13 +130,13 @@ int main(int argc, char const *argv[]) {
 
                 if(strcmp(sgbd,"firebird")==0){
                   printf("Firebird\n");
-                  sockCli = iniciarSocketCliente(conffb->ip,atoi(&conffb->port));
+                  sockCli = iniciarSocketCliente(conffb->ip,atoi(&conffb->port),idsockc);
                 }else if(strcmp(sgbd,"postgresql")==0){
                   printf("Postgresql\n");
-                  sockCli = iniciarSocketCliente(confpost->ip,atoi(&confpost->port));
+                  sockCli = iniciarSocketCliente(confpost->ip,atoi(&confpost->port),idsockc);
                 }else if(strcmp(sgbd,"mysql")==0){
                   printf("Mysql\n");
-                  sockCli = iniciarSocketCliente(confmy->ip,atoi(&confmy->port));
+                  sockCli = iniciarSocketCliente(confmy->ip,atoi(&confmy->port),idsockc);
                 }else{
                   printf("Opcion Incorrecta!\n");
                 }
@@ -143,12 +145,9 @@ int main(int argc, char const *argv[]) {
                     write(sockCli,querySend,sizeof(querySend));
                     printf("Esperando leer\n" );
                     strcpy(query,"");
-                    printf("ANTES %s\n", query);
                     char respuesta[1024]="";
-                    //read(sockCli,query,1024);
                     read(sockCli,respuesta,1024);
-                    printf("DP %s\n",respuesta);
-                    write(idsockc,query,sizeof(query));
+                    write(idsockc,respuesta,sizeof(respuesta));
                     close(sockCli);
                     close(idsockc);
                 }else{
