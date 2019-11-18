@@ -12,7 +12,8 @@
 #include <fcntl.h>
 #include "ini/ini.h"
 
-#define IpSv "127.0.0.1"
+//#define IpSv "127.0.0.1"
+#define IpSv "0.0.0.0"
 
 int puertoSv;
 char sgbd[20];
@@ -125,7 +126,7 @@ int main(int argc, char *argv[]) {
 
                   if(strcmp(sgbd,"mysql")==0){
                     printf("Consulta MySQL\n");
-                    //funcionMysql(IpSv,userBD, passUserBD,databasename,idsockc,querySql,response);
+                    //funcionMysql(ipBd,userBD, passUserBD,databasename,idsockc,querySql,response);
                   }
 
                   strcpy(querySql,"");

@@ -68,7 +68,7 @@ int main(int argc, char const *argv[]) {
     printf(">");
     char query[1024];
     char respuesta[1024];
-    fgets (query, 100, stdin);
+    fgets (query, 1000, stdin);
 
     char *p;
     p = strchr(query,'\n');//Busco el salto de linea
