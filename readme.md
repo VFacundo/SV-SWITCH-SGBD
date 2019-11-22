@@ -45,11 +45,11 @@ Manage postgresql from console https://www.a2hosting.com/kb/developer-corner/pos
 -1 gcc -Wall -g -c ini/ini.c  
 -2 gcc -Wall -o svSwitch ini/ini.o svSwitch.c  
 
-##Example Query
-  >sgbd/databaseName/query
-  >firebird/facturacion/select * from factura
-  >postgresql/personal/select * from empleado
-  >mysql/gestion_de_recursos/select * from productos
+## Example Query
+  >sgbd/databaseName/query  
+  >firebird/facturacion/select * from factura  
+  >postgresql/personal/select * from empleado  
+  >mysql/gestion_de_recursos/select * from productos  
 
 ## Running environment
 	Databases servers:
